@@ -28,6 +28,7 @@ exports.amendTicket = (req, res) => {
     const { lines } = req.body;
     const ticket = ticketService.amendTicket(id, lines);
     if (!ticket) return res.status(400).json({ message: 'Ticket cannot be amended' });
+    if (ticket == "checked") return res.status(400).json({ message: 'Ticket already checked' });
     res.json(ticket);
 };
 

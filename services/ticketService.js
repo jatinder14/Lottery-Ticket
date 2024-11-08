@@ -35,15 +35,15 @@ exports.getTicketById = (id) => {
 
 // Amend lines to an existing ticket if it hasn't been checked
 exports.amendTicket = (id, n) => {
-    if (!tickets[id] || tickets[id].checked) return null;
-    
+    if (!tickets[id]) return null;
+    else if (tickets[id].checked) return "checked";
+
     // case 1 we can update the whole ticket lines
-    tickets[id].lines = Array.from({ length: n }, generateLine);
+    // tickets[id].lines = Array.from({ length: n }, generateLine);
 
     // case 2 we can add new lines to the existing ticket lines
-    // const newLines = Array.from({ length: n }, generateLine);
-    // tickets[id].lines.push(...newLines);
-    
+    const newLines = Array.from({ length: n }, generateLine);
+    tickets[id].lines.push(...newLines);
     return { id, ...tickets[id] };
 };
 
@@ -51,8 +51,7 @@ exports.amendTicket = (id, n) => {
 exports.checkTicketStatus = (id) => {
     const ticket = tickets[id];
     if (!ticket) return null;
-    else if(ticket.checked) return "checked";
-    // const results = ticket.lines.map(calculateLineResult);
+    else if (ticket.checked) return "checked";
     ticket.results = ticket.lines.map(line => ({ line, result: calculateLineResult(line) }));
     ticket.results.sort((a, b) => b.result - a.result);
     ticket.checked = true;

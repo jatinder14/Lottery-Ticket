@@ -41,3 +41,8 @@ npm run start
 
 ### You can access the swagger for the api docs at 
 http://localhost:3000/api-docs/
+
+### Run the Unit-Test-Cases
+```bash
+npm run test
+```
